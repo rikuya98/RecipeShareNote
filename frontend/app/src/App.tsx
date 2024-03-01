@@ -1,25 +1,73 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { HeaderNav } from './components/molecules/HeaderNav';
+import { Container, Text, Heading, Card, CardHeader, CardBody, CardFooter, Flex , Divider, Tag, Box, Grid,GridItem} from '@yamada-ui/react';
+import { Cards } from './components/molecules/Card';
 
 function App() {
+  const onChange = (value: string) => {
+    console.log(value);
+  }
+  const onClick = () => {
+    console.log("click");
+  }
+  const onSelect = (value: string) => {
+    console.log(value);
+  }
+
+  const recipes = [
+    {
+      title: "サツマイモの豆乳シチュー",
+      date: "1月30日",
+      author: "山田太郎",
+      tags: ["大おかず"],
+    },
+    {
+      title: "鶏胸肉のトマト煮込み",
+      date: "2月5日",
+      author: "山田太郎",
+      tags: ["大おかず"],
+    },
+    {
+      title: "アボカドとマグロのタルタル",
+      date: "2月12日",
+      author: "佐藤花子",
+      tags: ["小おかず"],
+    },
+    {
+      title: "かぼちゃの冷製スープ",
+      date: "2月20日",
+      author: "鈴木一郎",
+      tags: ["小おかず"],
+    },
+    {
+      title: "焼きそば",
+      date: "2月28日",
+      author: "伊藤梨花",
+      tags: ["ごはん"],
+    },
+    {
+      title: "鶏の唐揚げ",
+      date: "3月5日",
+      author: "山田太郎",
+      tags: ["大おかず"],
+    }
+  ];
+  
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+    <HeaderNav onChange={onChange} onClick={onClick} onSelect={onSelect}  />
+    <Container>
+      <Heading size="md">記事一覧</Heading>
+      <Cards recipes={recipes} />
+    </Container>
+    <Container>
+
+
+
+
+</Container>
+    </>
   );
 }
 

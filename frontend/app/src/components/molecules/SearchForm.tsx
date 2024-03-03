@@ -11,7 +11,7 @@ interface SearchFormProps {
 export const SearchForm = (props: SearchFormProps) => {
     const { placeholder, onChange, onClick } = props;
     return (
-        <Box display="flex" padding="sm" margin="sm" gap="sm">
+        <Box display="flex" p="sm" m="sm" gap="sm">
             <InputComponent placeholder={placeholder} onChange={onChange} />
             <ActionButton onClick={onClick} ButtonName="検索" />
         </Box>

@@ -20,11 +20,9 @@ export const HeaderNav = (props: HeaderNavProps) => {
         { label: "ごはん", value: "ごはん"}
     ]
     return (
-        <>
-        <Box>
-        <Flex>
+        <Flex alignItems="center">
         <Box padding="sm" margin="sm" >
-        <AvatarComponent name="ロゴ" src="RecipeShareNote/frontend/app/image/logo.png" />
+        <AvatarComponent name="ロゴ" />
         </Box>
         <Spacer />
         <SearchForm placeholder="レシピを検索" onChange={onChange} onClick={onClick} />
@@ -35,7 +33,5 @@ export const HeaderNav = (props: HeaderNavProps) => {
         <ActionButton ButtonName="レシピ投稿" onClick={onClick} />
         </Box>
         </Flex>
-        </Box>
-        </>
     );
 }

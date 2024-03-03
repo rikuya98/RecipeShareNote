@@ -5,8 +5,21 @@ import { Cards } from './components/molecules/Card';
 import { UIProvider } from '@yamada-ui/react';
 import { customTheme } from './theme/index';
 import { recipes } from './dummy/dummyDate';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 
 function App() {
+  const [recipes, setRecipes] = useState([]);
+  
+  const getRecipes = async () => {
+    const res = await axios.get('http://localhost:4000/recipes');
+    setRecipes(res.data);
+  };
+
+  useEffect(() => {
+    getRecipes();
+  }, []);
+
   const onChange = (value: string) => {
     console.log(value);
   }

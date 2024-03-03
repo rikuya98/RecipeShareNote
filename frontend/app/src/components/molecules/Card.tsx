@@ -5,9 +5,7 @@ interface CardProps {
     recipes:
         {
             title: string;
-            date: string;
-            author: string;
-            tags: string[];
+            content: string;
         }[]
 }
 
@@ -23,13 +21,11 @@ export const Cards = (props: CardProps) => {
 </CardHeader>
 <CardBody>
 <Flex gap="md" direction="column">
-  <Text size="sm" >作成日時: {recipe.date}</Text>
-  <Text size="sm" >作成者: {recipe.author}</Text>
+  <Text size="sm" >作成日時: １月１日</Text>
+  <Text size="sm" >作成者: りーちゃん</Text>
   <Divider variant="solid" />
   <Box>
-    {recipe.tags.map((tag, tagIndex) => (
-      <Tag key={tagIndex} size="sm">{tag}</Tag>
-    ))}
+      <Tag size="sm">ごはん</Tag>
   </Box>
 </Flex>
 </CardBody>

@@ -8,7 +8,7 @@ interface ActionButtonProps {
 export const ActionButton = (props: ActionButtonProps) => {
     const { onClick, ButtonName} = props;
     return (
-        <Button size="sm" variant="solid" colorScheme="primary">
+        <Button size="sm" variant="solid" colorScheme="primary" onClick={onClick}>
         {ButtonName}
         </Button>
     );

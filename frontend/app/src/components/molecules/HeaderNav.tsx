@@ -3,6 +3,7 @@ import { AvatarComponent } from "../atomo/AvatarComponent";
 import { Selector} from "../atomo/Selector";
 import { Flex, Spacer, Box} from "@yamada-ui/react"
 import { ActionButton } from "../atomo/ActionButton";
+import { RecipeCreate } from "./RecipeCreate";
 
 interface HeaderNavProps {
     onChange: (value: string) => void;
@@ -30,7 +31,7 @@ export const HeaderNav = (props: HeaderNavProps) => {
         <Selector placeholder="カテゴリ検索" items={items} onChange={onSelect} />
         </Box>
         <Box margin="sm" padding="sm">
-        <ActionButton ButtonName="レシピ投稿" onClick={onClick} />
+        <RecipeCreate />
         </Box>
         </Flex>
     );

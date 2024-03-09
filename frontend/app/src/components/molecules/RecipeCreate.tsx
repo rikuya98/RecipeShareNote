@@ -15,10 +15,7 @@ export const RecipeCreate = () => {
                     title: title,
                     content: content
                 },
-            },{
-                headers: {
-                    'Content-Type': 'application/json',
-            },}
+            },
             )
            onClose();
            

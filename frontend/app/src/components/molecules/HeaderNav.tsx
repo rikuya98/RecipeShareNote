@@ -18,7 +18,9 @@ export const HeaderNav = (props: HeaderNavProps) => {
         { label: "小おかず", value: "小おかず" },
         { label: "揚げ物", value: "揚げ物" },
         { label: "スチコン", value: "スチコン" },
-        { label: "ごはん", value: "ごはん"}
+        { label: "ごはん", value: "ごはん"},
+        { label: "野菜", value: "野菜" },
+        { label: "その他", value: "その他"}
     ]
     return (
         <Flex alignItems="center">

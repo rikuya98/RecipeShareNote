@@ -8,6 +8,7 @@ RSpec.describe 'RecipesController' do
       it '全てのメモが取得できることを確認する' do
         aggregate_failures do
           get '/recipes'
+          assert_response_schema_confirm(200)
           expect(response).to have_http_status(:ok)
           expect(response.parsed_body.length).to eq(3)
         end
@@ -23,6 +24,7 @@ RSpec.describe 'RecipesController' do
             post '/recipes', params: { recipe: { title: 'title', content: 'content' } }
           end.to change(Recipe, :count).by(+1)
           expect(response).to have_http_status(:no_content)
+          assert_response_schema_confirm(204)
         end
       end
     end
@@ -30,6 +32,7 @@ RSpec.describe 'RecipesController' do
       it '422になり、エラーメッセージがレスポンスとして返る' do
         aggregate_failures do
           post '/recipes', params: { recipe: { title: '', content: '' } }
+          assert_response_schema_confirm(422)
           expect(response).to have_http_status(:unprocessable_entity)
           expect(response.parsed_body['erros']).to include("Title can't be blank")
           expect(response.parsed_body['erros']).to include("Content can't be blank")
@@ -46,6 +49,7 @@ RSpec.describe 'RecipesController' do
         aggregate_failures do
           put "/recipes/#{recipe.id}", params: { recipe: params }
           expect(response).to have_http_status(:no_content)
+          assert_response_schema_confirm(204)
           expect(Recipe.find(recipe.id).title).to eq('新しいタイトル')
           expect(Recipe.find(recipe.id).content).to eq('新しいコンテンツ')
         end
@@ -58,6 +62,7 @@ RSpec.describe 'RecipesController' do
         aggregate_failures do
           put "/recipes/#{recipe.id}", params: { recipe: params }
           expect(response).to have_http_status(:unprocessable_entity)
+          assert_response_schema_confirm(422)
           expect(response.parsed_body['erros']).to include("Title can't be blank")
           expect(response.parsed_body['erros']).to include("Content can't be blank")
         end
@@ -71,6 +76,7 @@ RSpec.describe 'RecipesController' do
           aggregate_failures do
             delete "/recipes/#{recipe.id}"
             expect(response).to have_http_status(:no_content)
+            assert_response_schema_confirm(204)
             expect(Recipe.find_by(id: recipe.id)).to be_nil
           end
         end
@@ -78,12 +84,11 @@ RSpec.describe 'RecipesController' do
       context 'レシピが存在しない場合' do
         it '404になることを確認する' do
           aggregate_failures do
-            expect { delete "/recipes/0" }.not_to change(Recipe, :count)
+            expect { delete '/recipes/0' }.not_to change(Recipe, :count)
             expect(response).to have_http_status(:not_found)
           end
         end
       end
     end
   end
-  
 end

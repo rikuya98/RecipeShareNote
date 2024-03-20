@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe 'RecipesController' do
@@ -8,6 +10,7 @@ RSpec.describe 'RecipesController' do
       it '全てのメモが取得できることを確認する' do
         aggregate_failures do
           get '/recipes'
+          assert_request_schema_confirm
           assert_response_schema_confirm(200)
           expect(response).to have_http_status(:ok)
           expect(response.parsed_body.length).to eq(3)
@@ -21,9 +24,10 @@ RSpec.describe 'RecipesController' do
       it 'レシピが作成されることを確認する' do
         aggregate_failures do
           expect do
-            post '/recipes', params: { recipe: { title: 'title', content: 'content' } }
+            post '/recipes', params: { title: 'aaaaaaaa', content: 'aaaaaaa' }, as: :json
           end.to change(Recipe, :count).by(+1)
           expect(response).to have_http_status(:no_content)
+          assert_request_schema_confirm
           assert_response_schema_confirm(204)
         end
       end
@@ -47,7 +51,7 @@ RSpec.describe 'RecipesController' do
       let(:params) { { title: '新しいタイトル', content: '新しいコンテンツ' } }
       it 'レシピが更新されることを確認する' do
         aggregate_failures do
-          put "/recipes/#{recipe.id}", params: { recipe: params }
+          put "/recipes/#{recipe.id}", params: { recipe: params }, as: :json
           expect(response).to have_http_status(:no_content)
           assert_response_schema_confirm(204)
           expect(Recipe.find(recipe.id).title).to eq('新しいタイトル')

@@ -35,7 +35,8 @@ RSpec.describe 'RecipesController' do
     context 'パラメータが異常な場合' do
       it '422になり、エラーメッセージがレスポンスとして返る' do
         aggregate_failures do
-          post '/recipes', params: { recipe: { title: '', content: '' } }
+          post '/recipes', params: { title: '', content: '' }, as: :json
+          assert_request_schema_confirm
           assert_response_schema_confirm(422)
           expect(response).to have_http_status(:unprocessable_entity)
           expect(response.parsed_body['erros']).to include("Title can't be blank")
@@ -51,7 +52,8 @@ RSpec.describe 'RecipesController' do
       let(:params) { { title: '新しいタイトル', content: '新しいコンテンツ' } }
       it 'レシピが更新されることを確認する' do
         aggregate_failures do
-          put "/recipes/#{recipe.id}", params: { recipe: params }, as: :json
+          put "/recipes/#{recipe.id}", params: params, as: :json
+          assert_request_schema_confirm
           expect(response).to have_http_status(:no_content)
           assert_response_schema_confirm(204)
           expect(Recipe.find(recipe.id).title).to eq('新しいタイトル')
@@ -64,7 +66,8 @@ RSpec.describe 'RecipesController' do
       let!(:params) { { title: '', content: '' } }
       it '422になり、エラーメッセージがレスポンスとして返る' do
         aggregate_failures do
-          put "/recipes/#{recipe.id}", params: { recipe: params }
+          put "/recipes/#{recipe.id}", params: params, as: :json
+          assert_request_schema_confirm
           expect(response).to have_http_status(:unprocessable_entity)
           assert_response_schema_confirm(422)
           expect(response.parsed_body['erros']).to include("Title can't be blank")
@@ -79,6 +82,7 @@ RSpec.describe 'RecipesController' do
         it 'レシピが削除されることを確認する' do
           aggregate_failures do
             delete "/recipes/#{recipe.id}"
+            assert_request_schema_confirm
             expect(response).to have_http_status(:no_content)
             assert_response_schema_confirm(204)
             expect(Recipe.find_by(id: recipe.id)).to be_nil

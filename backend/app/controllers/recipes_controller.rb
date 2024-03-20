@@ -2,7 +2,7 @@
 
 class RecipesController < ApplicationController
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
-  
+
   # GET /recipes
   def index
     recipes = Recipe.all

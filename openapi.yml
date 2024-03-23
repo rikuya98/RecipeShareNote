@@ -1,0 +1,134 @@
+openapi: 3.0.0
+info:
+  title: レシピAPI
+  version: 1.0.0
+  description: レシピを管理するためのAPI
+servers:
+  - url: http://localhost:4000
+    description: ローカル開発環境
+paths:
+  /recipes:
+    get:
+      summary: 全てのレシピをリスト表示
+      responses:
+        '200':
+          description: レシピのリスト
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Recipe'
+      operationId: get-recipes
+      tags:
+        - recipe
+    post:
+      summary: 新しいレシピを作成
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RecipeInput'
+      responses:
+        '204':
+          description: レシピが正常に作成されました
+        '422':
+          description: バリデーションエラー
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: create-recipe
+      tags:
+        - recipe
+  /recipes/{id}:
+    get:
+      summary: 特定のレシピを表示
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: レシピの詳細
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Recipe'
+        '404':
+          description: レシピが見つかりません
+      operationId: get-recipe
+      tags:
+        - recipe
+    put:
+      summary: レシピを更新
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RecipeInput'
+      responses:
+        '204':
+          description: レシピが正常に更新されました
+        '422':
+          description: バリデーションエラー
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: update-recipe
+      tags:
+        - recipe
+    delete:
+      summary: レシピを削除
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: レシピが正常に削除されました
+      operationId: delete-recipe
+      tags:
+        - recipe
+components:
+  schemas:
+    Recipe:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        title:
+          type: string
+        content:
+          type: string
+    RecipeInput:
+      type: object
+      required:
+        - title
+        - content
+      properties:
+        title:
+          type: string
+        content:
+          type: string
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: string

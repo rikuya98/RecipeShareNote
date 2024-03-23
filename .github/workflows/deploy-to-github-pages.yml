@@ -1,4 +1,4 @@
-name: Deploy to GitHub Pages
+name: Deploy to GitHub Pages1
 
 on:
   pull_request:
@@ -9,7 +9,7 @@ on:
       - synchronize
       - closed
     paths:
-      - backend/doc/openapi.yml
+      - ./backend/doc/openapi.yml
       - .github/workflows/deploy-to-github-pages.yml
 
 jobs:
@@ -24,14 +24,14 @@ jobs:
 
       - name: Validate Swagger Files
         run: |
-          swagger-cli validate -d backend/doc/openapi.yaml --type yaml
+          swagger-cli validate -d backend/doc/openapi.yml --type yaml
 
       - name: Generate Swagger UI
         if: github.event.pull_request.merged == true
         uses: Legion2/swagger-ui-action@v1
         with:
           output: swagger-ui
-          spec-file: backend/doc/openapi.yaml
+          spec-file: backend/doc/openapi.yml
           index-file: index.html
 
       - name: Deploy to GitHub Pages

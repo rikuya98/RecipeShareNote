@@ -30,7 +30,7 @@ jobs:
         if: github.event.pull_request.merged == true
         uses: Legion2/swagger-ui-action@v1
         with:
-          output: swagger-ui
+          output: swagger-uiあ
           spec-file: ./backend/doc/openapi.yml
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Deploy to GitHub Pages
@@ -38,4 +38,4 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: .
+          publish_dir: swagger-ui

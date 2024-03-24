@@ -1,4 +1,4 @@
-name: Deploy OpenApi to GitHub Pages
+name: Deploy OpenApi to GitHub Pages!
 
 on:
   push:

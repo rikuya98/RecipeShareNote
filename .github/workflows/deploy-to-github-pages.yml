@@ -1,13 +1,9 @@
 name: Deploy to GitHub Pages1
 
 on:
-  pull_request:
+  push:
     branches:
       - main
-    types:
-      - opened
-      - synchronize
-      - closed
     paths:
       - ./backend/doc/openapi.yml
       - .github/workflows/deploy-to-github-pages.yml
@@ -16,7 +12,7 @@ jobs:
   deploy-to-github-pages:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - name: Install swagger-cli
         run: |
@@ -27,15 +23,13 @@ jobs:
           swagger-cli validate -d backend/doc/openapi.yml --type yaml
 
       - name: Generate Swagger UI
-        if: github.event.pull_request.merged == true
         uses: Legion2/swagger-ui-action@v1
         with:
           output: swagger-ui
           spec-file: ./backend/doc/openapi.yml
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Deploy to GitHub Pages
-        if: github.event.pull_request.merged == true
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: .
+          publish_dir: swagger-ui

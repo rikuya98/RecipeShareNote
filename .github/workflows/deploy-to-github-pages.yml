@@ -4,9 +4,8 @@ on:
   push:
     branches:
       - main
-    paths:
-      - './backend/doc/openapi.yml'
-
+#    paths:
+#      - './backend/doc/openapi.yml'
 jobs:
   deploy:
     runs-on: ubuntu-latest

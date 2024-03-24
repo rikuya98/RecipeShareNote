@@ -24,7 +24,7 @@ jobs:
       - name: Generate Swagger UI
         run: |
           swagger-cli bundle -o openapi.yml ./backend/doc/openapi.yml
-          swagger-cli generate-html -i openapi.yml -o swagger-ui
+          swagger-cli generate-html -i openapi.yml -o ./swagger-ui
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
